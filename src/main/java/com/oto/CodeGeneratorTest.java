@@ -24,13 +24,18 @@ public class CodeGeneratorTest {
     static final String pwd = "root";
     //父包路径
     static final String parentPackage = "com.oto";
-    //模块名字 父包+模块+contrller/service+xxx.java
+    //模块名字 文件生成路径  父包+模块+ contrller/service/... +xxx.java
     static final String moduleName = "aa";
-    //
+    //表名字前缀 配置了就只生成 此前缀的表的代码
     static final String prefix="ord";
 
     public static void main(String[] args) {
 
+        String[] strings1 = getStrings();
+        generate(strings1);
+    }
+
+    private static String[] getStrings() {
         List<String> strings=new ArrayList<>();
         ResultSet resultSet=null;
         Statement statement=null;
@@ -63,13 +68,12 @@ public class CodeGeneratorTest {
                 if (connection!=null){
                     connection.close();
                 }
-            } catch (SQLException throwables) {
-                throwables.printStackTrace();
+            } catch (SQLException throwable) {
+                throwable.printStackTrace();
             }
         }
         String[] s1=new String[strings.size()];
-        String[] strings1 = strings.toArray(s1);
-        generate(strings1);
+        return strings.toArray(s1);
     }
 
     private static void generate(String[] s) {
@@ -169,6 +173,10 @@ public class CodeGeneratorTest {
         strategy.setEntityBooleanColumnRemoveIsPrefix(true);
         strategy.setRestControllerStyle(true);
 //        strategy.setSuperControllerClass("");
+        //如果只生成一个表 需要把s替换成tableName
+//        String tableName="";
+//        strategy.setInclude(tableName);
+
         strategy.setInclude(s);
 //        strategy.setSuperEntityColumns("id");
         strategy.setControllerMappingHyphenStyle(true);
