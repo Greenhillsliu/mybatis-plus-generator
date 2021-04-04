@@ -22,7 +22,7 @@ public class CodeGeneratorTest {
 //    static final String dbUrl = "jdbc:mysql://125.91.109.80:7007/xbapp8dev";
     static final String dbUrl = "jdbc:sqlserver://121.37.244.38:1433;DatabaseName=obj";
     static final String dbDriver = "com.microsoft.sqlserver.jdbc.SQLServerDriver";
-//    static final String dbDriver = "com.mysql.jdbc.Driver";
+    //    static final String dbDriver = "com.mysql.jdbc.Driver";
     //用户名
 //    static final String uname = "root";
     static final String uname = "sa";
@@ -30,9 +30,9 @@ public class CodeGeneratorTest {
 //    static final String pwd = "x5";
     static final String pwd = "By594bgsn.";
     //父包路径
-    static final String parentPackage = "com.obd";
+    static final String parentPackage = "com.ycxx";
     //模块名字 文件生成路径  父包+模块+ contrller/service/... +xxx.java
-    static final String moduleName = "";
+    static final String moduleName = "obd";
     //表名字前缀 配置了就只生成 此前缀的表的代码
     static final String prefix="obd_";
 
@@ -124,9 +124,9 @@ public class CodeGeneratorTest {
             public void initMap() {
                 // to do nothing
                 Map<String, Object> map = new HashMap<>();
-                map.put("dtoPackage", parentPackage+".domain.dto");
-                map.put("voPackage", parentPackage+".domain.vo");
-                map.put("queryPackage", parentPackage+".domain.query");
+                map.put("dtoPackage", parentPackage+"."+moduleName+".domain.dto");
+                map.put("voPackage", parentPackage+"."+moduleName+".domain.vo");
+                map.put("queryPackage", parentPackage+"."+moduleName+".domain.query");
                 this.setMap(map);
             }
         };
@@ -143,11 +143,11 @@ public class CodeGeneratorTest {
 
 
         // 自定义配置会被优先输出
-        focList.add(new FileOutConfig("templates/entityDTO.java.ftl") {
+        focList.add(new FileOutConfig("/templates/entityDTO.java.ftl") {
             @Override
             public String outputFile(TableInfo tableInfo) {
 //                // 自定义输出文件名 ， 如果你 Entity 设置了前后缀、此处注意 xml 的名称会跟着发生变化！！
-                return projectPath + "/src/main/java/" + parentPackage.replace(".","/")+"/domain/dto"
+                return projectPath + "/src/main/java/" + parentPackage.replace(".","/")+"/"+moduleName+"/domain/dto"
                         + "/" + tableInfo.getEntityName() + "DTO.java";
             }
         });
@@ -155,7 +155,7 @@ public class CodeGeneratorTest {
             @Override
             public String outputFile(TableInfo tableInfo) {
 //                // 自定义输出文件名 ， 如果你 Entity 设置了前后缀、此处注意 xml 的名称会跟着发生变化！！
-                return projectPath + "/src/main/java/" + parentPackage.replace(".","/")+"/domain/vo"
+                return projectPath + "/src/main/java/" + parentPackage.replace(".","/")+"/"+moduleName+"/domain/vo"
                         + "/" + tableInfo.getEntityName() + "VO.java";
             }
         });
@@ -163,7 +163,7 @@ public class CodeGeneratorTest {
             @Override
             public String outputFile(TableInfo tableInfo) {
 //                // 自定义输出文件名 ， 如果你 Entity 设置了前后缀、此处注意 xml 的名称会跟着发生变化！！
-                return projectPath + "/src/main/java/" + parentPackage.replace(".","/")+"/domain/dto"
+                return projectPath + "/src/main/java/" + parentPackage.replace(".","/")+"/"+moduleName+"/domain/dto"
                         + "/" + tableInfo.getEntityName() + "DeleteDTO.java";
             }
         });
@@ -171,7 +171,7 @@ public class CodeGeneratorTest {
             @Override
             public String outputFile(TableInfo tableInfo) {
 //                // 自定义输出文件名 ， 如果你 Entity 设置了前后缀、此处注意 xml 的名称会跟着发生变化！！
-                return projectPath + "/src/main/java/" + parentPackage.replace(".","/")+"/domain/query"
+                return projectPath + "/src/main/java/" + parentPackage.replace(".","/")+"/"+moduleName+"/domain/query"
                         + "/" + tableInfo.getEntityName() + "QueryParam.java";
             }
         });
