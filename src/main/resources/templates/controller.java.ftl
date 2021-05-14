@@ -16,6 +16,7 @@ import ${package.Service}.${table.serviceName};
 import ${package.Entity}.${entity};
 import java.util.ArrayList;
 import java.util.List;
+import io.swagger.annotations.Api;
 import javax.servlet.http.HttpServletResponse;
 <#if restControllerStyle>
 import org.springframework.web.bind.annotation.RestController;
@@ -39,6 +40,7 @@ import ${superControllerClassPackage};
 <#else>
     @Controller
 </#if>
+@Api(tags = "${table.comment!}管理")
 @RequestMapping("<#if package.ModuleName??>/${package.ModuleName}</#if>/<#if controllerMappingHyphenStyle??>${controllerMappingHyphen}<#else>${table.entityPath}</#if>")
 <#if kotlin>
 public class ${table.controllerName}<#if superControllerClass??> : ${superControllerClass}()</#if>

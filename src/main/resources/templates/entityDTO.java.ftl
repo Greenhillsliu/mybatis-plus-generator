@@ -78,22 +78,27 @@ public class ${entity}DTO implements Serializable {
     <#if (logicDeleteFieldName!"") == field.name>
     @TableLogic
     </#if>-->
-    <#if field.propertyType!?index_of("String")!=-1>
+    <#if !field.propertyName?contains("createTime")
+        &&!field.propertyName?contains("updateTime")
+        &&!field.propertyName?contains("creator")
+        &&!field.propertyName?contains("modifier")>
+            <#if field.propertyType!?index_of("String")!=-1>
     @NotBlank(groups = {InsertGroup.class,UpdateGroup.class},message = "${field.comment?trim}不能为空")
     @ApiModelProperty(value = "${field.comment?trim}")
-    <#elseif field.propertyType!?index_of("List")!=-1>
+            <#elseif field.propertyType!?index_of("List")!=-1>
     @NotEmpty(groups = {InsertGroup.class,UpdateGroup.class},message = "${field.comment?trim}不能为空")
     @ApiModelProperty(value = "${field.comment?trim}")
-    <#else>
-        <#if field.keyFlag>
+            <#else>
+                <#if field.keyFlag>
     @NotNull(groups = UpdateGroup.class,message = "${field.comment?trim}不能为空")
     @ApiModelProperty(value = "${field.comment?trim},数据修改必须传,数据新增不能传")
-        <#else>
+                <#else>
     @NotNull(groups = {InsertGroup.class,UpdateGroup.class},message = "${field.comment?trim}不能为空")
     @ApiModelProperty(value = "${field.comment?trim}")
-        </#if>
-    </#if >
+                </#if>
+            </#if >
     private ${field.propertyType} ${field.propertyName};
+    </#if>
 </#list>
 <#------------  END 字段循环遍历  ---------->
 <#if !entityLombokModel>
