@@ -10,6 +10,7 @@ import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 </#if>
 import java.io.Serializable;
+import java.time.LocalDateTime;
 
 /**
  * <p>
@@ -40,10 +41,10 @@ public class ${entity}QueryParam implements Serializable {
     </#if>
     <#if field.comment!?length gt 0>
     <#if swagger2>
-    @ApiModelProperty(value = "${field.comment}")
+    @ApiModelProperty(value = "${field.comment?trim}")
     <#else>
     /**
-     * ${field.comment}
+     * ${field.comment?trim}
      */
     </#if>
     </#if>
@@ -75,7 +76,7 @@ public class ${entity}QueryParam implements Serializable {
     <#if (logicDeleteFieldName!"") == field.name>
     @TableLogic
     </#if>-->
-    @ApiModelProperty(value = "${field.comment}")
+    @ApiModelProperty(value = "${field.comment?trim}")
     private ${field.propertyType} ${field.propertyName};
 </#list>
 <#------------  END 字段循环遍历  ---------->
@@ -130,4 +131,8 @@ public class ${entity}QueryParam implements Serializable {
         "}";
     }
 </#if>
+    @ApiModelProperty(value = "页码")
+    private Integer page;
+    @ApiModelProperty(value = "每页记录数")
+    private Integer size;
 }

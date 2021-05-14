@@ -12,6 +12,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 </#if>
+import java.time.LocalDateTime;
 
 /**
  * <p>
@@ -53,7 +54,7 @@ public class ${entity} implements Serializable {
 
     <#if field.comment!?length gt 0>
     <#if swagger2>
-    @ApiModelProperty(value = "${field.comment}")
+    @ApiModelProperty(value = "${field.comment?trim}")
     <#else>
     /**
      * ${field.comment}

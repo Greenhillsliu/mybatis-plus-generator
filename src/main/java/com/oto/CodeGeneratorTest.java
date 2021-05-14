@@ -18,28 +18,33 @@ public class CodeGeneratorTest {
     //作者
     static final String author = "liu";
     //jdbc连接
+    //jdbc连接
 //    static final String dbUrl = "jdbc:mysql://139.159.225.21:3306/wms?useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull&serverTimezone=Asia/Shanghai";
-//    static final String dbUrl = "jdbc:mysql://125.91.109.80:7007/xbapp8dev";
-    static final String dbUrl = "jdbc:sqlserver://121.37.244.38:1433;DatabaseName=obj";
+//    static final String dbUrl = "jdbc:mysql://125.91.109.80:7007/xbapp8dev?useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull&serverTimezone=Asia/Shanghai";
+//    static final String dbUrl = "jdbc:mysql://localhost:3306/node?useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull&serverTimezone=Asia/Shanghai";
+        static final String dbUrl = "jdbc:sqlserver://121.37.244.38:1433;DatabaseName=bonus";
     static final String dbDriver = "com.microsoft.sqlserver.jdbc.SQLServerDriver";
-    //    static final String dbDriver = "com.mysql.jdbc.Driver";
+//    static final String dbDriver = "com.mysql.cj.jdbc.Driver";
     //用户名
 //    static final String uname = "root";
-    static final String uname = "sa";
+        static final String uname = "sa";
     //密码
 //    static final String pwd = "x5";
     static final String pwd = "By594bgsn.";
+//    static final String pwd = "yld2020.";
+//    static final String pwd = "root";
     //父包路径
-    static final String parentPackage = "com.ycxx";
+    static final String parentPackage = "com.hfc";
     //模块名字 文件生成路径  父包+模块+ contrller/service/... +xxx.java
-    static final String moduleName = "obd";
+    static final String moduleName = "bonus";
     //表名字前缀 配置了就只生成 此前缀的表的代码
-    static final String prefix="obd_";
+    static final String prefix="bonus";
 
     public static void main(String[] args) {
 
         String[] strings1 = getStrings();
-//        String[] strings1 = {"obd_in_storage"};
+//        String[] strings1 = new String[]{"LIKP","LIPS"};
+//        String[] strings1 = {"registry_rule"};
 
         generate(strings1);
 
@@ -207,7 +212,7 @@ public class CodeGeneratorTest {
         strategy.setColumnNaming(NamingStrategy.underline_to_camel);
 //        strategy.setSuperEntityClass("");
         strategy.setEntityLombokModel(true);
-        strategy.setTablePrefix("obd_");
+//        strategy.setTablePrefix("bonus_");
         strategy.setSkipView(true);
         strategy.setEntityBooleanColumnRemoveIsPrefix(true);
         strategy.setEntityTableFieldAnnotationEnable(true);

@@ -37,7 +37,7 @@ public class ${table.serviceImplName} extends ${superServiceImplClass}<${table.m
     *添加${table.comment!}
     */
     public Boolean save${entity}(${entity}DTO ${entity?uncap_first}DTO){
-        ${entity} ${entity?uncap_first}=new ${entity};
+        ${entity} ${entity?uncap_first}=new ${entity}();
         BeanUtils.copyProperties(${entity?uncap_first}DTO,${entity?uncap_first});
         return save(${entity?uncap_first});
     };
@@ -45,7 +45,7 @@ public class ${table.serviceImplName} extends ${superServiceImplClass}<${table.m
     *更新${table.comment!}
     */
     public Boolean update${entity}(${entity}DTO ${entity?uncap_first}DTO){
-        ${entity} ${entity?uncap_first}=new ${entity};
+        ${entity} ${entity?uncap_first}=new ${entity}();
         BeanUtils.copyProperties(${entity?uncap_first}DTO,${entity?uncap_first});
         return updateById(${entity?uncap_first});
     };
@@ -56,12 +56,19 @@ public class ${table.serviceImplName} extends ${superServiceImplClass}<${table.m
         return removeById(id);
     };
     /**
-    *查询${table.comment!}
+    *分页查询${table.comment!}
     */
-    public IPage<${entity}VO> list${entity}(${entity}QueryParam queryParam){
+    public IPage<${entity}> list${entity}(${entity}QueryParam queryParam){
         LambdaQueryWrapper<${entity}> ${entity?uncap_first}Wrapper=getLambdaQueryWrapper(queryParam);
         IPage<${entity}> page = PageBuilder.buildPage(queryParam.getPage(),queryParam.getSize());
         return page(page,${entity?uncap_first}Wrapper);
+    };
+    /**
+    *导出${table.comment!}
+    */
+    public List<${entity}> export${entity}(${entity}QueryParam queryParam){
+        LambdaQueryWrapper<${entity}> ${entity?uncap_first}Wrapper=getLambdaQueryWrapper(queryParam);
+        return list(${entity?uncap_first}Wrapper);
     };
     /**
     *批量删除${table.comment!}
@@ -82,11 +89,20 @@ public class ${table.serviceImplName} extends ${superServiceImplClass}<${table.m
     return new QueryWrapper<${entity}>();
     }
     /**
-    *导出${table.comment!}
+    *分页查询${table.comment!}VO
     */
-    List<${entity}VO> export${entity}(${entity}QueryParam queryParam){
+    public IPage<${entity}VO> list${entity}VO(${entity}QueryParam queryParam){
         LambdaQueryWrapper<${entity}> ${entity?uncap_first}Wrapper=getLambdaQueryWrapper(queryParam);
-        return list(${entity?uncap_first}Wrapper)
+        IPage<${entity}VO> page = PageBuilder.buildPage(queryParam.getPage(),queryParam.getSize());
+        return ${table.mapperName?uncap_first}.page(page,${entity?uncap_first}Wrapper);
+        };
+    /**
+    *导出${table.comment!}VO
+    */
+    public List<${entity}VO> export${entity}VO(${entity}QueryParam queryParam){
+        LambdaQueryWrapper<${entity}> ${entity?uncap_first}Wrapper=getLambdaQueryWrapper(queryParam);
+        return ${table.mapperName?uncap_first}.list(${entity?uncap_first}Wrapper);
     };
+
 }
 </#if>

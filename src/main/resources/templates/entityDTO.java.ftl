@@ -12,6 +12,7 @@ import lombok.experimental.Accessors;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
+import java.time.LocalDateTime;
 
 /**
  * <p>
@@ -78,18 +79,18 @@ public class ${entity}DTO implements Serializable {
     @TableLogic
     </#if>-->
     <#if field.propertyType!?index_of("String")!=-1>
-    @NotBlank(groups = {Insert.class,Update.class},message = "${field.comment}不能为空")
-    @ApiModelProperty(value = "${field.comment}")
+    @NotBlank(groups = {InsertGroup.class,UpdateGroup.class},message = "${field.comment?trim}不能为空")
+    @ApiModelProperty(value = "${field.comment?trim}")
     <#elseif field.propertyType!?index_of("List")!=-1>
-    @NotEmpty(groups = {Insert.class,Update.class},message = "${field.comment}不能为空")
-    @ApiModelProperty(value = "${field.comment}")
+    @NotEmpty(groups = {InsertGroup.class,UpdateGroup.class},message = "${field.comment?trim}不能为空")
+    @ApiModelProperty(value = "${field.comment?trim}")
     <#else>
         <#if field.keyFlag>
-    @NotNull(groups = Update.class,message = "${field.comment}不能为空")
-    @ApiModelProperty(value = "${field.comment},数据修改必须传,数据新增不能传")
+    @NotNull(groups = UpdateGroup.class,message = "${field.comment?trim}不能为空")
+    @ApiModelProperty(value = "${field.comment?trim},数据修改必须传,数据新增不能传")
         <#else>
-    @NotNull(groups = {Insert.class,Update.class},message = "${field.comment}不能为空")
-    @ApiModelProperty(value = "${field.comment}")
+    @NotNull(groups = {InsertGroup.class,UpdateGroup.class},message = "${field.comment?trim}不能为空")
+    @ApiModelProperty(value = "${field.comment?trim}")
         </#if>
     </#if >
     private ${field.propertyType} ${field.propertyName};

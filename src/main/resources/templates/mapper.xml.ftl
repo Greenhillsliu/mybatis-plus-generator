@@ -8,7 +8,7 @@
 
 </#if>
 <#if baseResultMap>
-    <!-- 通用查询映射结果 -->
+    <!-- 通用查实体类询映射结果 -->
     <resultMap id="BaseResultMap" type="${package.Entity}.${entity}">
 <#list table.fields as field>
 <#if field.keyFlag><#--生成主键排在第一位-->
@@ -26,6 +26,25 @@
     </resultMap>
 
 </#if>
+    <!-- 通用查询VO映射结果 -->
+<#if baseResultMap>
+    <resultMap id="BaseVOResultMap" type="${cfg.voPackage}.${entity}VO">
+        <#list table.fields as field>
+            <#if field.keyFlag><#--生成主键排在第一位-->
+                <id column="${field.name}" property="${field.propertyName}" />
+            </#if>
+        </#list>
+        <#list table.commonFields as field><#--生成公共字段 -->
+            <result column="${field.name}" property="${field.propertyName}" />
+        </#list>
+        <#list table.fields as field>
+            <#if !field.keyFlag><#--生成普通字段 -->
+                <result column="${field.name}" property="${field.propertyName}" />
+            </#if>
+        </#list>
+    </resultMap>
+
+</#if>
 <#if baseColumnList>
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
@@ -36,4 +55,10 @@
     </sql>
 
 </#if>
+    <select id="page" resultMap="BaseVOResultMap">
+        select * from  ${table.mapperName}
+    </select>
+    <select id="list" resultMap="BaseVOResultMap">
+        select * from  ${table.mapperName}
+    </select>
 </mapper>

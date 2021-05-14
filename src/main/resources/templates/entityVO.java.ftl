@@ -13,6 +13,7 @@ import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 </#if>
 import com.alibaba.excel.annotation.ExcelProperty;
+import java.time.LocalDateTime;
 
 
 /**
@@ -45,10 +46,10 @@ public class ${entity}VO implements Serializable {
 
   <#if field.comment!?length gt 0>
   <#if swagger2>
-  @ApiModelProperty(value = "${field.comment}")
+  @ApiModelProperty(value = "${field.comment?trim}")
   <#else>
   /**
-   * ${field.comment}
+   * ${field.comment?trim}
    */
   </#if>
   </#if>
@@ -80,8 +81,8 @@ public class ${entity}VO implements Serializable {
   <#if (logicDeleteFieldName!"") == field.name>
   @TableLogic
   </#if>-->
-    @ApiModelProperty(value = "${field.comment}")
-    @ExcelProperty("${field.comment}")
+    @ApiModelProperty(value = "${field.comment?trim}")
+    @ExcelProperty("${field.comment?trim}")
     private ${field.propertyType} ${field.propertyName};
 </#list>
 <#------------  END 字段循环遍历  ---------->

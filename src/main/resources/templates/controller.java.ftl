@@ -13,6 +13,7 @@ import ${cfg.dtoPackage}.${entity}DeleteDTO;
 import ${cfg.queryPackage}.${entity}QueryParam;
 import ${cfg.voPackage}.${entity}VO;
 import ${package.Service}.${table.serviceName};
+import ${package.Entity}.${entity};
 import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.http.HttpServletResponse;
@@ -55,7 +56,7 @@ public class ${table.controllerName} {
     */
     @ApiOperation("添加${table.comment!}")
     @PostMapping("add")
-    public CommonResult<Boolean> save${entity}(@RequestBody @Validated({Insert.class}) ${entity}DTO ${entity?uncap_first}DTO) {
+    public CommonResult<Boolean> save${entity}(@RequestBody @Validated({InsertGroup.class}) ${entity}DTO ${entity?uncap_first}DTO) {
         return CommonResult.success(${table.serviceName?uncap_first}.save${entity}(${entity?uncap_first}DTO));
     }
     /**
@@ -63,7 +64,7 @@ public class ${table.controllerName} {
     */
     @ApiOperation("更新${table.comment!}")
     @PostMapping("update")
-    public CommonResult<Boolean> update${entity}(@RequestBody @Validated({Update.class}) ${entity}DTO ${entity?uncap_first}DTO) {
+    public CommonResult<Boolean> update${entity}(@RequestBody @Validated({UpdateGroup.class}) ${entity}DTO ${entity?uncap_first}DTO) {
         return CommonResult.success(${table.serviceName?uncap_first}.update${entity}(${entity?uncap_first}DTO));
     }
     /**
@@ -74,14 +75,7 @@ public class ${table.controllerName} {
     public CommonResult<Boolean> delete${entity}(@RequestBody @Validated ${entity}DeleteDTO deleteDTO) {
         return CommonResult.success(${table.serviceName?uncap_first}.delete${entity}(deleteDTO.getIds().get(0)));
     }
-    /**
-    *查询${table.comment!}
-    */
-    @ApiOperation("查询${table.comment!}")
-    @PostMapping("list")
-    public CommonResult<IPage<${entity}VO>> list${entity}(@RequestBody  ${entity}QueryParam queryParam) {
-        return CommonResult.success(${table.serviceName?uncap_first}.list${entity}(queryParam));
-    }
+
     /**
     *批量删除${table.comment!}
     */
@@ -91,16 +85,44 @@ public class ${table.controllerName} {
         return CommonResult.success(${table.serviceName?uncap_first}.delete${entity}Batch(deleteDTO.getIds()));
     }
     /**
+    *导出${table.comment!}VO
+    */
+    @ApiOperation("导出${table.comment!}VO")
+    @PostMapping("export-vo")
+    public void export${entity}VO(@RequestBody  ${entity}QueryParam queryParam, HttpServletResponse response) {
+        List<${entity}VO> ${entity}s = ${table.serviceName?uncap_first}.export${entity}VO(queryParam);
+        if (CollectionUtil.isEmpty(${entity}s )) {
+            ${entity}s = new ArrayList<>();
+        }
+        ExcelExportUtil.exportResponse(response,${entity}s,"${table.comment!}",${entity}VO.class);
+    }
+    /**
+    *查询${table.comment!}VO
+    */
+    @ApiOperation("查询${table.comment!}VO")
+    @PostMapping("list-vo")
+    public CommonResult<IPage<${entity}VO>> list${entity}VO(@RequestBody  ${entity}QueryParam queryParam) {
+        return CommonResult.success(${table.serviceName?uncap_first}.list${entity}VO(queryParam));
+    }
+    /**
     *导出${table.comment!}
     */
     @ApiOperation("导出${table.comment!}")
     @PostMapping("export")
     public void export${entity}(@RequestBody  ${entity}QueryParam queryParam, HttpServletResponse response) {
-        List<${entity}VO> ${entity}s = ${table.serviceName?uncap_first}.export${entity}(queryParam);
-        if (CollectionUtil.isEmpty(${entity}s )) {
+    List<${entity}> ${entity}s = ${table.serviceName?uncap_first}.export${entity}(queryParam);
+        if (CollectionUtil.isEmpty(${entity}s)) {
             ${entity}s = new ArrayList<>();
         }
-        ExcelExportUtil.exportResponse(response,${entity}s,"${table.comment!}",${entity}VO.class);
+        ExcelExportUtil.exportResponse(response,${entity}s,"${table.comment!}",${entity}.class);
+    }
+    /**
+    *查询${table.comment!}
+    */
+    @ApiOperation("查询${table.comment!}")
+    @PostMapping("list")
+    public CommonResult<IPage<${entity}>> list${entity}(@RequestBody  ${entity}QueryParam queryParam) {
+        return CommonResult.success(${table.serviceName?uncap_first}.list${entity}(queryParam));
     }
 }
 </#if>
