@@ -44,7 +44,7 @@ public class CodeGeneratorTest {
 
         String[] strings1 = getStrings();
 //        String[] strings1 = new String[]{"LIKP","LIPS"};
-//        String[] strings1 = {"registry_rule"};
+//        String[] strings1 = {"bonus_config_category"};
 
         generate(strings1);
 
@@ -105,6 +105,7 @@ public class CodeGeneratorTest {
         gc.setSwagger2(true);
         gc.setBaseResultMap(true);
 
+
         mpg.setGlobalConfig(gc);
 
         // 数据源配置
@@ -132,6 +133,7 @@ public class CodeGeneratorTest {
                 map.put("dtoPackage", parentPackage+"."+moduleName+".domain.dto");
                 map.put("voPackage", parentPackage+"."+moduleName+".domain.vo");
                 map.put("queryPackage", parentPackage+"."+moduleName+".domain.query");
+                map.put("excelPackage", parentPackage+"."+moduleName+".excel");
                 this.setMap(map);
             }
         };
@@ -178,6 +180,15 @@ public class CodeGeneratorTest {
 //                // 自定义输出文件名 ， 如果你 Entity 设置了前后缀、此处注意 xml 的名称会跟着发生变化！！
                 return projectPath + "/src/main/java/" + parentPackage.replace(".","/")+"/"+moduleName+"/domain/query"
                         + "/" + tableInfo.getEntityName() + "QueryParam.java";
+            }
+        });
+
+        focList.add(new FileOutConfig("/templates/excel.java.ftl") {
+            @Override
+            public String outputFile(TableInfo tableInfo) {
+//                // 自定义输出文件名 ， 如果你 Entity 设置了前后缀、此处注意 xml 的名称会跟着发生变化！！
+                return projectPath + "/src/main/java/" + parentPackage.replace(".","/")+"/"+moduleName+"/excel"
+                        + "/" + tableInfo.getEntityName() + "VOListener.java";
             }
         });
 

@@ -1,13 +1,14 @@
 package ${package.Service};
 
 import ${package.Entity}.${entity};
+import ${cfg.voPackage}.${entity}VO;
 import ${superServiceClassPackage};
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import ${cfg.dtoPackage}.${entity}DTO;
 import ${cfg.dtoPackage}.${entity}DeleteDTO;
 import ${cfg.queryPackage}.${entity}QueryParam;
-import ${cfg.voPackage}.${entity}VO;
 import java.util.List;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
 * <p>
@@ -54,5 +55,9 @@ public interface ${table.serviceName} extends ${superServiceClass}<${entity}> {
     *导出${table.comment!}
     */
     List<${entity}> export${entity}(${entity}QueryParam queryParam);
+    /**
+    *导入${table.comment!}VO
+    */
+    Boolean import${entity}VO(MultipartFile file);
 }
 </#if>

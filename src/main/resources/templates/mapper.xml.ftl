@@ -56,9 +56,9 @@
 
 </#if>
     <select id="page" resultMap="BaseVOResultMap">
-        select * from  ${table.mapperName}
+        select * from  ${table.name} ${"$"}{ew.customSqlSegment}
     </select>
     <select id="list" resultMap="BaseVOResultMap">
-        select * from  ${table.mapperName}
+        select * from  ${table.name} ${"$"}{ew.customSqlSegment}
     </select>
 </mapper>

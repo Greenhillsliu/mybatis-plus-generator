@@ -3,11 +3,9 @@ package ${package.Controller};
 
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import org.springframework.web.multipart.MultipartFile;
 import ${cfg.dtoPackage}.${entity}DTO;
 import ${cfg.dtoPackage}.${entity}DeleteDTO;
 import ${cfg.queryPackage}.${entity}QueryParam;
@@ -36,7 +34,7 @@ import ${superControllerClassPackage};
 * @since ${date}
 */
 <#if restControllerStyle>
-    @RestController
+@RestController
 <#else>
     @Controller
 </#if>
@@ -125,6 +123,14 @@ public class ${table.controllerName} {
     @PostMapping("list")
     public CommonResult<IPage<${entity}>> list${entity}(@RequestBody  ${entity}QueryParam queryParam) {
         return CommonResult.success(${table.serviceName?uncap_first}.list${entity}(queryParam));
+    }
+    /**
+    *导入${table.comment!}VO
+    */
+    @ApiOperation("导入${table.comment!}VO")
+    @PostMapping("import-vo")
+    public CommonResult<Boolean> import${entity}VO(@RequestParam("file")  MultipartFile file) {
+        return CommonResult.success(${table.serviceName?uncap_first}.import${entity}VO(file));
     }
 }
 </#if>

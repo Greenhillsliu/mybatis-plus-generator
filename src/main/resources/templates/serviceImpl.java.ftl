@@ -14,7 +14,16 @@ import ${cfg.dtoPackage}.${entity}DTO;
 import ${cfg.dtoPackage}.${entity}DeleteDTO;
 import ${cfg.queryPackage}.${entity}QueryParam;
 import ${cfg.voPackage}.${entity}VO;
+import ${cfg.excelPackage}.${entity}VOListener;
 import java.util.List;
+import java.time.LocalDateTime;
+import com.hfc.bonus.util.PageBuilder;
+import org.springframework.web.multipart.MultipartFile;
+import com.alibaba.excel.exception.ExcelAnalysisException;
+import com.alibaba.excel.EasyExcel;
+import com.hfc.bonus.converter.LocalDateTimeStringConverter;
+
+import java.io.IOException;
 
 /**
  * <p>
@@ -47,6 +56,7 @@ public class ${table.serviceImplName} extends ${superServiceImplClass}<${table.m
     public Boolean update${entity}(${entity}DTO ${entity?uncap_first}DTO){
         ${entity} ${entity?uncap_first}=new ${entity}();
         BeanUtils.copyProperties(${entity?uncap_first}DTO,${entity?uncap_first});
+        ${entity?uncap_first}.setUpdateTime(LocalDateTime.now());
         return updateById(${entity?uncap_first});
     };
     /**
@@ -103,6 +113,21 @@ public class ${table.serviceImplName} extends ${superServiceImplClass}<${table.m
         LambdaQueryWrapper<${entity}> ${entity?uncap_first}Wrapper=getLambdaQueryWrapper(queryParam);
         return ${table.mapperName?uncap_first}.list(${entity?uncap_first}Wrapper);
     };
+    /**
+    *导入${table.comment!}VO
+    */
+    public Boolean import${entity}VO(MultipartFile file){
+        try {
+            EasyExcel.read(file.getInputStream(),${entity}VO.class,
+            new ${entity}VOListener(LocalDateTime.now(),this))
+                .registerConverter(new LocalDateTimeStringConverter()).sheet().doRead();
+        } catch (IOException | ExcelAnalysisException e) {
+            e.printStackTrace();
+            return Boolean.FALSE;
+        }
+        return Boolean.TRUE;
+    };
+
 
 }
 </#if>

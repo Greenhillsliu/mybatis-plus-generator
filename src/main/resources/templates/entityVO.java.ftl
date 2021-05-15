@@ -14,6 +14,7 @@ import lombok.experimental.Accessors;
 </#if>
 import com.alibaba.excel.annotation.ExcelProperty;
 import java.time.LocalDateTime;
+import com.alibaba.excel.annotation.ExcelIgnore;
 
 
 /**
@@ -81,8 +82,16 @@ public class ${entity}VO implements Serializable {
   <#if (logicDeleteFieldName!"") == field.name>
   @TableLogic
   </#if>-->
-    @ApiModelProperty(value = "${field.comment?trim}")
+
+    <#if field.propertyName=="modifier"||field.propertyName=="creator">
+        <#continue >
+    </#if>
+    <#if field.keyFlag>
+    @ExcelIgnore
+    <#else>
     @ExcelProperty("${field.comment?trim}")
+    </#if>
+    @ApiModelProperty(value = "${field.comment?trim}")
     private ${field.propertyType} ${field.propertyName};
 </#list>
 <#------------  END 字段循环遍历  ---------->

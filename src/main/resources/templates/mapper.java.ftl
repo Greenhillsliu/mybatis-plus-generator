@@ -8,6 +8,7 @@ import org.apache.ibatis.annotations.Param;
 import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import ${cfg.voPackage}.${entity}VO;
 import java.util.List;
+import org.springframework.stereotype.Repository;
 
 
 /**
@@ -21,6 +22,7 @@ import java.util.List;
 <#if kotlin>
 interface ${table.mapperName} : ${superMapperClass}<${entity}>
 <#else>
+@Repository
 public interface ${table.mapperName} extends ${superMapperClass}<${entity}> {
 
    IPage<${entity}VO> page(IPage<${entity}VO> page, @Param(Constants.WRAPPER)Wrapper<${entity}> wrapper);
