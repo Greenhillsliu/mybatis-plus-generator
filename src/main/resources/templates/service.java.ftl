@@ -25,6 +25,7 @@ public interface ${table.serviceName} extends ${superServiceClass}<${entity}> {
     /**
     *添加${table.comment!}
     */
+    @
     Boolean save${entity}(${entity}DTO ${entity?uncap_first}DTO);
     /**
     *更新${table.comment!}

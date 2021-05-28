@@ -54,11 +54,11 @@ public class ${entity}VOListener extends AnalysisEventListener<${entity}VO> {
     */
     @Override
     public void invoke(${entity}VO data, AnalysisContext context) {
-        ${entity} ${entity?cap_first}=new ${entity}();
-        BeanUtil.copyProperties(data,${entity?cap_first});
-        ${entity?cap_first}.setCreateTime(date);
-        ${entity?cap_first}.setUpdateTime(date);
-        list.add(${entity?cap_first});
+        ${entity} ${entity?uncap_first}=new ${entity}();
+        BeanUtil.copyProperties(data,${entity?uncap_first});
+        ${entity?uncap_first}.setCreateTime(date);
+        ${entity?uncap_first}.setUpdateTime(date);
+        list.add(${entity?uncap_first});
         if(list.size()>3000){
             ${table.serviceName?uncap_first}.saveBatch(list);
             list.clear();

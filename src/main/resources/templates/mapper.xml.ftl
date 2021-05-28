@@ -48,17 +48,21 @@
 <#if baseColumnList>
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-<#list table.commonFields as field>
+<#--<#list table.commonFields as field>
         ${field.name},
-</#list>
+</#list>-->
         ${table.fieldNames}
     </sql>
 
 </#if>
     <select id="page" resultMap="BaseVOResultMap">
-        select * from  ${table.name} ${"$"}{ew.customSqlSegment}
+        select
+        <include refid="Base_Column_List"></include>
+        from  ${table.name} ${"$"}{ew.customSqlSegment}
     </select>
     <select id="list" resultMap="BaseVOResultMap">
-        select * from  ${table.name} ${"$"}{ew.customSqlSegment}
+        select
+        <include refid="Base_Column_List"></include>
+        from  ${table.name} ${"$"}{ew.customSqlSegment}
     </select>
 </mapper>

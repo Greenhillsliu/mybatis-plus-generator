@@ -42,9 +42,17 @@ public class CodeGeneratorTest {
 
     public static void main(String[] args) {
 
-        String[] strings1 = getStrings();
+//        String[] strings1 = getStrings();
 //        String[] strings1 = new String[]{"LIKP","LIPS"};
-//        String[] strings1 = {"bonus_config_category"};
+//        String[] strings1 = {"bonus_base_bonus"};
+        String[] strings1 = {"bonus_calculate_record"
+                ,"bonus_month_assess_msg"
+                ,"bonus_month_post_record"
+                ,"bonus_month_record"
+                ,"bonus_person_post_assess_msg",
+                "bonus_person_post_calculate_record","bonus_person_record"
+                ,"bonus_person_record_assess_msg"
+        };
 
         generate(strings1);
 
@@ -102,6 +110,7 @@ public class CodeGeneratorTest {
         gc.setOutputDir(projectPath + "/src/main/java"); //输出 文件路径
         gc.setAuthor(author);
         gc.setOpen(false);
+        gc.setBaseColumnList(true);
         gc.setSwagger2(true);
         gc.setBaseResultMap(true);
 
@@ -223,6 +232,7 @@ public class CodeGeneratorTest {
         strategy.setColumnNaming(NamingStrategy.underline_to_camel);
 //        strategy.setSuperEntityClass("");
         strategy.setEntityLombokModel(true);
+
 //        strategy.setTablePrefix("bonus_");
         strategy.setSkipView(true);
         strategy.setEntityBooleanColumnRemoveIsPrefix(true);
